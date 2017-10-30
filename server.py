@@ -12,12 +12,18 @@ from fbpage import page
 app = Flask(__name__)
 
 
+@app.before_request
+def log_request_info():
+    print('Headers: %s' % request.headers)
+    print('Body: %s' % request.get_data())
+
+
 @app.route('/webhook', methods=['GET'])
 def validate():
     if request.args.get('hub.mode', '') == 'subscribe' and \
                     request.args.get('hub.verify_token', '') == CONFIG['VERIFY_TOKEN']:
 
-        print("Validating webhook")
+        print("/webhook: Validating webhook")
 
         return request.args.get('hub.challenge', '')
     else:
@@ -27,7 +33,7 @@ def validate():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     payload = request.get_data(as_text=True)
-    print(payload)
+    print("/webhook: payload:", payload)
     page.handle_webhook(payload)
 
     return "ok"

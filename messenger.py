@@ -19,7 +19,7 @@ def received_authentication(event):
 
     pass_through_param = event.optin.get("ref")
 
-    print("Received authentication for user %s and page %s with pass "
+    print("received_authentication: for user %s and page %s with pass "
           "through param '%s' at %s" % (sender_id, recipient_id, pass_through_param, time_of_auth))
 
     page.send(sender_id, "Authentication successful")
@@ -31,8 +31,8 @@ def received_echo(event):
     message_id = message.get("mid")
     app_id = message.get("app_id")
     metadata = message.get("metadata")
-    print("page id : %s , %s" % (page.page_id, page.page_name))
-    print("Received echo for message %s and app %s with metadata %s" % (message_id, app_id, metadata))
+    print("received_echo: page id : %s , %s" % (page.page_id, page.page_name))
+    print("received_echo: for message %s and app %s with metadata %s" % (message_id, app_id, metadata))
 
 
 @page.handle_message
@@ -41,7 +41,7 @@ def received_message(event):
     recipient_id = event.recipient_id
     time_of_message = event.timestamp
     message = event.message
-    print("Received message for user %s and page %s at %s with message:"
+    print("received_message: for user %s and page %s at %s with message:"
           % (sender_id, recipient_id, time_of_message))
     print(message)
 
@@ -56,14 +56,14 @@ def received_message(event):
 
     seq_id = sender_id + ':' + recipient_id
     if USER_SEQ.get(seq_id, -1) >= seq:
-        print("Ignore duplicated request")
+        print("received_message: Ignore duplicated request")
         return None
     else:
         USER_SEQ[seq_id] = seq
 
     if quick_reply:
         quick_reply_payload = quick_reply.get('payload')
-        print("quick reply for message %s with payload %s" % (message_id, quick_reply_payload))
+        print("received_message: quick reply for message %s with payload %s" % (message_id, quick_reply_payload))
 
         page.send(sender_id, "Quick reply tapped")
 
@@ -81,9 +81,9 @@ def received_delivery_confirmation(event):
 
     if message_ids:
         for message_id in message_ids:
-            print("Received delivery confirmation for message ID: %s" % message_id)
+            print("received_delivery_confirmation: for message ID: %s" % message_id)
 
-    print("All message before %s were delivered." % watermark)
+    print("received_delivery_confirmation: All message before %s were delivered." % watermark)
 
 
 @page.handle_postback
@@ -94,7 +94,7 @@ def received_postback(event):
 
     payload = event.postback_payload
 
-    print("Received postback for user %s and page %s with payload '%s' at %s"
+    print("received_postback: for user %s and page %s with payload '%s' at %s"
           % (sender_id, recipient_id, payload, time_of_postback))
 
     page.send(sender_id, "Postback called")
@@ -105,7 +105,7 @@ def received_message_read(event):
     watermark = event.read.get("watermark")
     seq = event.read.get("seq")
 
-    print("Received message read event for watermark %s and sequence number %s" % (watermark, seq))
+    print("received_message_read: event for watermark %s and sequence number %s" % (watermark, seq))
 
 
 @page.handle_account_linking
@@ -114,7 +114,7 @@ def received_account_link(event):
     status = event.account_linking.get("status")
     auth_code = event.account_linking.get("authorization_code")
 
-    print("Received account link event with for user %s with status %s and auth code %s "
+    print("received_account_link: event for user %s with status %s and auth code %s "
           % (sender_id, status, auth_code))
 
 
@@ -139,13 +139,14 @@ def send_message(recipient_id, text):
     }
 
     if text in special_keywords:
+        print("send_message: special type %s" % text)
         special_keywords[text](recipient_id)
     else:
         page.send(recipient_id, text, callback=send_text_callback, notification_type=NotificationType.REGULAR)
 
 
 def send_text_callback(payload, response):
-    print("SEND CALLBACK")
+    print("send_text_callback")
 
 
 def send_image(recipient):
@@ -186,6 +187,7 @@ def send_button(recipient):
 
 @page.callback(['DEVELOPED_DEFINED_PAYLOAD'])
 def callback_clicked_button(payload, event):
+    print("callback_clicked_button:")
     print(payload, event)
 
 
@@ -265,6 +267,7 @@ def send_quick_reply(recipient):
 
 @page.callback(['PICK_ACTION'])
 def callback_picked_genre(payload, event):
+    print("callback_picked_genre:")
     print(payload, event)
 
 
