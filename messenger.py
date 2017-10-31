@@ -30,23 +30,23 @@ def start_callback(payload, event):
     page.send(recipient, "i cant help with everything, but i can help you do something")
 
     # only 3 buttons???! geez
-    page.send(recipient, Template.Buttons("what is your particular shame today?", [
-        {'type': 'postback', 'title': 'procrastinating so much', 'value': 'PICK_PROCRASTINATION'},
-        {'type': 'postback', 'title': 'mediocrity gonna get me', 'value': 'PICK_MEDIOCRITY'},
-#        {'type': 'postback', 'title': 'just overwhelmed', 'value': 'PICK_OVERWHELMED'},
-        {'type': 'postback', 'title': 'distractions everywhere', 'value': 'PICK_DISTRACTIONS'},        
-    ]))
-""" 
+#    page.send(recipient, Template.Buttons("what is your particular shame today?", [
+#        {'type': 'postback', 'title': 'procrastinating so much', 'value': 'PICK_PROCRASTINATION'},
+#        {'type': 'postback', 'title': 'mediocrity gonna get me', 'value': 'PICK_MEDIOCRITY'},
+##        {'type': 'postback', 'title': 'just overwhelmed', 'value': 'PICK_OVERWHELMED'},
+#        {'type': 'postback', 'title': 'distractions everywhere', 'value': 'PICK_DISTRACTIONS'},        
+#    ]))
+ 
     # only 20 characters text in quick replies...
     page.send(recipient, "what is your particular shame today?",
               quick_replies=[
-                  {'title': 'procrastinating so much', 'payload': 'PICK_PROCRASTINATION'},
-                  {'title': 'mediocrity gonna get me', 'payload': 'PICK_MEDIOCRITY'},
+                  {'title': 'procrastinating++', 'payload': 'PICK_PROCRASTINATION'},
+                  {'title': 'mediocrity > me', 'payload': 'PICK_MEDIOCRITY'},
                   {'title': 'just overwhelmed', 'payload': 'PICK_OVERWHELMED'},
-                  {'title': 'distractions everywhere', 'payload': 'PICK_DISTRACTIONS'},
+                  {'title': '~distractions~', 'payload': 'PICK_DISTRACTIONS'},
               ],
               metadata="DEVELOPER_DEFINED_METADATA")
-"""
+
 
 @page.callback(['PICK_PROCRASTINATION'])
 def callback_picked_procrastination(payload, event):
