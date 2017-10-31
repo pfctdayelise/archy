@@ -29,13 +29,15 @@ def start_callback(payload, event):
     page.send(recipient, "hi, im archy, and im sorry to hear youve decided to write")
     page.send(recipient, "i cant help with everything, but i can help you do something")
 
+    # only 3 buttons???! geez
     page.send(recipient, Template.Buttons("what is your particular shame today?", [
         {'type': 'postback', 'title': 'procrastinating so much', 'value': 'PICK_PROCRASTINATION'},
         {'type': 'postback', 'title': 'mediocrity gonna get me', 'value': 'PICK_MEDIOCRITY'},
-        {'type': 'postback', 'title': 'just overwhelmed', 'value': 'PICK_OVERWHELMED'},
+#        {'type': 'postback', 'title': 'just overwhelmed', 'value': 'PICK_OVERWHELMED'},
         {'type': 'postback', 'title': 'distractions everywhere', 'value': 'PICK_DISTRACTIONS'},        
     ]))
-"""    
+""" 
+    # only 20 characters text in quick replies...
     page.send(recipient, "what is your particular shame today?",
               quick_replies=[
                   {'title': 'procrastinating so much', 'payload': 'PICK_PROCRASTINATION'},
