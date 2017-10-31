@@ -13,6 +13,10 @@ USER_SEQ = {}
 
 page.greeting("hey, I'm archy. welcome!")
 
+page.show_persistent_menu([
+    Template.ButtonPostBack('Get Started (Again)', 'START_PAYLOAD'),
+    ])
+
 page.show_starting_button("START_PAYLOAD")
 
 @page.callback(['START_PAYLOAD'])
