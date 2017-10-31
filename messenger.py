@@ -57,7 +57,7 @@ def callback_picked_mediocrity(payload, event):
 def callback_picked_overwhelmed(payload, event):
     print("pick_overwhelmed:")
     recipient = event.sender_id
-    page.send(recipient, "")
+    page.send(recipient, "...")
     page.send(recipient, "(TBC)")
 
 
