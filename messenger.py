@@ -11,6 +11,61 @@ from fbpage import page
 USER_SEQ = {}
 
 
+page.greeting("hey, I'm archy. welcome!")
+
+page.show_starting_button("START_PAYLOAD")
+
+@page.callback(['START_PAYLOAD'])
+def start_callback(payload, event):
+    print("start_callback")
+
+    recipient = event.sender_id
+    page.send(recipient, "hi, im archy, and im sorry to hear youve decided to write")
+    page.send(recipient, "i cant help with everything, but i can help you do something")
+    page.send(recipient, "what is your particular shame today?",
+              quick_replies=[
+                  {'title': 'procrastinating so much', 'payload': 'PICK_PROCRASTINATION'},
+                  {'title': 'mediocrity gonna get me', 'payload': 'PICK_MEDIOCRITY'},
+                  {'title': 'just overwhelmed', 'payload': 'PICK_OVERWHELMED'},
+                  {'title': 'distractions everywhere', 'payload': 'PICK_DISTRACTIONS'},
+              ],
+              metadata="DEVELOPER_DEFINED_METADATA")
+
+
+@page.callback(['PICK_PROCRASTINATION'])
+def callback_picked_procrastination(payload, event):
+    print("pick_procrastination:")
+    recipient = event.sender_id
+    page.send(recipient, "apart from a white noise machine or a new brain what do you think would help you?")
+    page.send(recipient, "(TBC)")
+
+
+@page.callback(['PICK_MEDIOCRITY'])
+def callback_picked_mediocrity(payload, event):
+    print("pick_mediocrity:")
+    recipient = event.sender_id
+    page.send(recipient, "that sounds unpleasant")
+    page.send(recipient, "what would help you right now?")
+    page.send(recipient, "(TBC)")
+
+
+@page.callback(['PICK_OVERWHELMED'])
+def callback_picked_overwhelmed(payload, event):
+    print("pick_overwhelmed:")
+    recipient = event.sender_id
+    page.send(recipient, "")
+    page.send(recipient, "(TBC)")
+
+
+@page.callback(['PICK_DISTRACTIONS'])
+def callback_picked_distractions(payload, event):
+    print("pick_distractions:")
+    recipient = event.sender_id
+    page.send(recipient, "i am not very good at staying focused")
+    page.send(recipient, "i can tell u that everyone has a dirty floor so if you think u should clean it instead, dont bother")
+    page.send(recipient, "(TBC)")
+
+
 @page.handle_optin
 def received_authentication(event):
     sender_id = event.sender_id
