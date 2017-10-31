@@ -21,11 +21,21 @@ page.show_starting_button("START_PAYLOAD")
 
 @page.callback(['START_PAYLOAD'])
 def start_callback(payload, event):
+    """Quick replies have a 20 character limit!
+    """
     print("start_callback")
 
     recipient = event.sender_id
     page.send(recipient, "hi, im archy, and im sorry to hear youve decided to write")
     page.send(recipient, "i cant help with everything, but i can help you do something")
+
+    page.send(recipient, Template.Buttons("what is your particular shame today?", [
+        {'type': 'postback', 'title': 'procrastinating so much', 'value': 'PICK_PROCRASTINATION'},
+        {'type': 'postback', 'title': 'mediocrity gonna get me', 'value': 'PICK_MEDIOCRITY'},
+        {'type': 'postback', 'title': 'just overwhelmed', 'value': 'PICK_OVERWHELMED'},
+        {'type': 'postback', 'title': 'distractions everywhere', 'value': 'PICK_DISTRACTIONS'},        
+    ]))
+"""    
     page.send(recipient, "what is your particular shame today?",
               quick_replies=[
                   {'title': 'procrastinating so much', 'payload': 'PICK_PROCRASTINATION'},
@@ -34,7 +44,7 @@ def start_callback(payload, event):
                   {'title': 'distractions everywhere', 'payload': 'PICK_DISTRACTIONS'},
               ],
               metadata="DEVELOPER_DEFINED_METADATA")
-
+"""
 
 @page.callback(['PICK_PROCRASTINATION'])
 def callback_picked_procrastination(payload, event):
