@@ -34,8 +34,10 @@ def validate():
 def webhook():
     payload = request.get_data(as_text=True)
     print("/webhook: payload:", payload)
-    page.handle_webhook(payload)
-
+    try:
+        page.handle_webhook(payload)
+    except TypeError:
+        print("No entry/messaging in payload? Ignoring")
     return "ok"
 
 

@@ -115,7 +115,8 @@ def received_message(event):
 
     seq_id = sender_id + ':' + recipient_id
     if USER_SEQ.get(seq_id, -1) >= seq:
-        print("received_message: Ignore duplicated request")
+        print("received_message: Ignore duplicated request, seq_id %s seq %s" % (seq_id, seq))
+        print(USER_SEQ)
         return None
     else:
         USER_SEQ[seq_id] = seq
