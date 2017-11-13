@@ -19,52 +19,56 @@ page.show_persistent_menu([
 
 page.show_starting_button("START_PAYLOAD")
 
-@page.callback(['START_PAYLOAD'])
-def start_callback(payload, event):
-    """Quick replies have a 20 character limit!
-    """
-    recipient = event.sender_id
-    page.send(recipient, "i cant help with everything, but i can help you do something")
+import util
+import twine
+util.add_functions_as_module_level_functions(twine.functions(), __name__)
+
+# @page.callback(['START_PAYLOAD'])
+# def start_callback(payload, event):
+#     """Quick replies have a 20 character limit!
+#     """
+#     recipient = event.sender_id
+#     page.send(recipient, "i cant help with everything, but i can help you do something")
  
-    # only 20 characters text in quick replies...
-    page.send(recipient, "what is your particular shame today?",
-              quick_replies=[
-                  {'title': 'procrastination', 'payload': 'PICK_PROCRASTINATION'},
-                  {'title': 'my mediocrity', 'payload': 'PICK_MEDIOCRITY'},
-                  {'title': 'just overwhelmed', 'payload': 'PICK_OVERWHELMED'},
-                  {'title': 'so distracted', 'payload': 'PICK_DISTRACTED'},
-              ],
-              metadata="DEVELOPER_DEFINED_METADATA")
+#     # only 20 characters text in quick replies...
+#     page.send(recipient, "what is your particular shame today?",
+#               quick_replies=[
+#                   {'title': 'procrastination', 'payload': 'PICK_PROCRASTINATION'},
+#                   {'title': 'my mediocrity', 'payload': 'PICK_MEDIOCRITY'},
+#                   {'title': 'just overwhelmed', 'payload': 'PICK_OVERWHELMED'},
+#                   {'title': 'so distracted', 'payload': 'PICK_DISTRACTED'},
+#               ],
+#               metadata="DEVELOPER_DEFINED_METADATA")
 
 
-@page.callback(['PICK_PROCRASTINATION'])
-def callback_picked_procrastination(payload, event):
-    recipient = event.sender_id
-    page.send(recipient, "apart from a white noise machine or a new brain what do you think would help you?")
-    page.send(recipient, "(TBC)")
+# @page.callback(['PICK_PROCRASTINATION'])
+# def callback_picked_procrastination(payload, event):
+#     recipient = event.sender_id
+#     page.send(recipient, "apart from a white noise machine or a new brain what do you think would help you?")
+#     page.send(recipient, "(TBC)")
 
 
-@page.callback(['PICK_MEDIOCRITY'])
-def callback_picked_mediocrity(payload, event):
-    recipient = event.sender_id
-    page.send(recipient, "that sounds unpleasant")
-    page.send(recipient, "what would help you right now?")
-    page.send(recipient, "(TBC)")
+# @page.callback(['PICK_MEDIOCRITY'])
+# def callback_picked_mediocrity(payload, event):
+#     recipient = event.sender_id
+#     page.send(recipient, "that sounds unpleasant")
+#     page.send(recipient, "what would help you right now?")
+#     page.send(recipient, "(TBC)")
 
 
-@page.callback(['PICK_OVERWHELMED'])
-def callback_picked_overwhelmed(payload, event):
-    recipient = event.sender_id
-    page.send(recipient, "...")
-    page.send(recipient, "(TBC)")
+# @page.callback(['PICK_OVERWHELMED'])
+# def callback_picked_overwhelmed(payload, event):
+#     recipient = event.sender_id
+#     page.send(recipient, "...")
+#     page.send(recipient, "(TBC)")
 
 
-@page.callback(['PICK_DISTRACTED'])
-def callback_picked_distractions(payload, event):
-    recipient = event.sender_id
-    page.send(recipient, "i am not very good at staying focused")
-    page.send(recipient, "i can tell u that everyone has a dirty floor so if you think u should clean it instead, dont bother")
-    page.send(recipient, "(TBC)")
+# @page.callback(['PICK_DISTRACTED'])
+# def callback_picked_distractions(payload, event):
+#     recipient = event.sender_id
+#     page.send(recipient, "i am not very good at staying focused")
+#     page.send(recipient, "i can tell u that everyone has a dirty floor so if you think u should clean it instead, dont bother")
+#     page.send(recipient, "(TBC)")
 
 
 @page.handle_optin
