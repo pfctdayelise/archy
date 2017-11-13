@@ -1,6 +1,6 @@
 
 class Response:
-    def do(self, page, recipient):
+    def do(self, page, payload, event):
         pass
 
 
@@ -8,7 +8,7 @@ class t(Response):
     def __init__(self, text):
         self.text = text
 
-    def do(self, page, recipient):
+    def do(self, page, payload, event):
         recipient = event.sender_id
         page.send(recipient, self.text)
 
@@ -18,7 +18,7 @@ class opts(Response):
         self.q = q
         self.options = options
 
-    def do(page, recipient):
+    def do(self, page, payload, event):
         recipient = event.sender_id
         options = [{'title': o, 'payload': make_payload(o)} for o in self.opts]
         page.send(recipient,
@@ -80,7 +80,7 @@ def make_callback(name):
 def functions(page):
     fns = {}
     for node in data:
-        fn = lambda payload, event: [item.do(payload, event) for item in node['response']]
+        fn = lambda payload, event: [item.do(page, payload, event) for item in node['response']]
         # tricky, decorator with arg and fn with arg.
         # See http://python-3-patterns-idioms-test.readthedocs.io/en/latest/PythonDecorators.html#decorators-with-arguments
         fn = page.callback([make_callback(node['name'])])(fn)
