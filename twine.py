@@ -20,10 +20,10 @@ class opts(Response):
 
     def do(self, page, payload, event):
         recipient = event.sender_id
-        options = [{'title': o, 'payload': make_payload(o)} for o in self.opts]
+        qrs = [{'title': o, 'payload': make_payload(o)} for o in self.options]
         page.send(recipient,
                   self.q,
-                  quick_replies=options,
+                  quick_replies=qrs,
                   metadata='DEVELOPER_DEFINED_METADATA')
 
 
