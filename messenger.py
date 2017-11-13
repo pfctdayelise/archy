@@ -21,7 +21,7 @@ page.show_starting_button("START_PAYLOAD")
 
 import util
 import twine
-util.add_functions_as_module_level_functions(twine.functions(), __name__)
+util.add_functions_as_module_level_functions(twine.functions(page), __name__)
 
 # @page.callback(['START_PAYLOAD'])
 # def start_callback(payload, event):

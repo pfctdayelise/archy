@@ -77,7 +77,7 @@ def make_callback(name):
     return make_payload(name)
 
 
-def functions():
+def functions(page):
     fns = {}
     for node in data:
         fn = lambda payload, event: [item.do(payload, event) for item in node['response']]
