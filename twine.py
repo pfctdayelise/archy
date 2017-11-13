@@ -21,6 +21,7 @@ class opts(Response):
     def do(self, page, payload, event):
         recipient = event.sender_id
         qrs = [{'title': o, 'payload': make_payload(o)} for o in self.options]
+        print('QRs:', qrs)
         page.send(recipient,
                   self.q,
                   quick_replies=qrs,
@@ -83,8 +84,11 @@ def functions(page):
         fn = lambda payload, event: [item.do(page, payload, event) for item in node['response']]
         # tricky, decorator with arg and fn with arg.
         # See http://python-3-patterns-idioms-test.readthedocs.io/en/latest/PythonDecorators.html#decorators-with-arguments
-        fn = page.callback([make_callback(node['name'])])(fn)
-        fns[make_callback(node['name']).lower()] = fn
+        callback = make_callback(node['name'])
+        fnname = callback.lower()
+        print('Callback:', callback, 'fn name:', fnname)
+        fn = page.callback([callback])(fn)
+        fns[fnname] = fn
         return fns
 
 
