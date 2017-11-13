@@ -11,10 +11,10 @@ from fbpage import page
 USER_SEQ = {}
 
 
-page.greeting("hey, I'm archy. welcome!")
+page.greeting("hi, im archy, and im sorry to hear youve decided to write")
 
 page.show_persistent_menu([
-    Template.ButtonPostBack('Get Started (Again)', 'START_PAYLOAD'),
+    Template.ButtonPostBack('get started (again)', 'START_PAYLOAD'),
     ])
 
 page.show_starting_button("START_PAYLOAD")
@@ -23,34 +23,22 @@ page.show_starting_button("START_PAYLOAD")
 def start_callback(payload, event):
     """Quick replies have a 20 character limit!
     """
-    print("start_callback")
-
     recipient = event.sender_id
-    page.send(recipient, "hi, im archy, and im sorry to hear youve decided to write")
     page.send(recipient, "i cant help with everything, but i can help you do something")
-
-    # only 3 buttons???! geez
-#    page.send(recipient, Template.Buttons("what is your particular shame today?", [
-#        {'type': 'postback', 'title': 'procrastinating so much', 'value': 'PICK_PROCRASTINATION'},
-#        {'type': 'postback', 'title': 'mediocrity gonna get me', 'value': 'PICK_MEDIOCRITY'},
-##        {'type': 'postback', 'title': 'just overwhelmed', 'value': 'PICK_OVERWHELMED'},
-#        {'type': 'postback', 'title': 'distractions everywhere', 'value': 'PICK_DISTRACTIONS'},        
-#    ]))
  
     # only 20 characters text in quick replies...
     page.send(recipient, "what is your particular shame today?",
               quick_replies=[
-                  {'title': 'procrastinating++', 'payload': 'PICK_PROCRASTINATION'},
-                  {'title': 'mediocrity > me', 'payload': 'PICK_MEDIOCRITY'},
+                  {'title': 'procrastination', 'payload': 'PICK_PROCRASTINATION'},
+                  {'title': 'my mediocrity', 'payload': 'PICK_MEDIOCRITY'},
                   {'title': 'just overwhelmed', 'payload': 'PICK_OVERWHELMED'},
-                  {'title': '~distractions~', 'payload': 'PICK_DISTRACTIONS'},
+                  {'title': 'so distracted', 'payload': 'PICK_DISTRACTED'},
               ],
               metadata="DEVELOPER_DEFINED_METADATA")
 
 
 @page.callback(['PICK_PROCRASTINATION'])
 def callback_picked_procrastination(payload, event):
-    print("pick_procrastination:")
     recipient = event.sender_id
     page.send(recipient, "apart from a white noise machine or a new brain what do you think would help you?")
     page.send(recipient, "(TBC)")
@@ -58,7 +46,6 @@ def callback_picked_procrastination(payload, event):
 
 @page.callback(['PICK_MEDIOCRITY'])
 def callback_picked_mediocrity(payload, event):
-    print("pick_mediocrity:")
     recipient = event.sender_id
     page.send(recipient, "that sounds unpleasant")
     page.send(recipient, "what would help you right now?")
@@ -67,15 +54,13 @@ def callback_picked_mediocrity(payload, event):
 
 @page.callback(['PICK_OVERWHELMED'])
 def callback_picked_overwhelmed(payload, event):
-    print("pick_overwhelmed:")
     recipient = event.sender_id
     page.send(recipient, "...")
     page.send(recipient, "(TBC)")
 
 
-@page.callback(['PICK_DISTRACTIONS'])
+@page.callback(['PICK_DISTRACTED'])
 def callback_picked_distractions(payload, event):
-    print("pick_distractions:")
     recipient = event.sender_id
     page.send(recipient, "i am not very good at staying focused")
     page.send(recipient, "i can tell u that everyone has a dirty floor so if you think u should clean it instead, dont bother")
