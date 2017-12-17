@@ -45,22 +45,26 @@ data = [
      {'name': 'procrastination',
      'response': [
          opts('apart from a white noise machine or a new brain what do you think would help you?', ['soothe me please', 'make me write']),
-     ]
+     ],
+      'types': ['QUICK_REPLY'],
      },
     {'name': 'my mediocrity',
      'response': [
          t('that sounds unpleasant'),
          opts('what would help you right now?', ['advice me', 'spill my guts', 'roast me, archy']),
          ],
+      'types': ['QUICK_REPLY'],
      },
     {'name': 'just overwhelmed',
      'response': [t('...tbc')],
+      'types': ['QUICK_REPLY'],
      },
     {'name': 'so distracted',
      'response': [t('i am not very good at staying focused'),
                   t('i can tell u that everyone has a dirty floor so if you think you should clean it instead, dont bother'),
                   t('...tbc'),
                   opts('do options work?', ['just overwhelmed', 'no']),
+      'types': ['QUICK_REPLY'],
      ],
      },
     
@@ -93,7 +97,17 @@ def functions(page):
         callback = make_callback(node['name'])
         fnname = make_function_name(callback)
         print('Callback:', callback, 'fn name:', fnname)
-        fn = page.callback([callback])(fn)
+
+        # fn = page.callback([callback])(fn)
+        # Below code adapted from Page.callback decorator
+        for _type in node['types']:
+            if _type == 'QUICK_REPLY':
+                page._quick_reply_callbacks[callback] = fn
+            elif _type == 'POSTBACK':
+                page._button_callbacks[callback] = fn
+            else:
+                raise ValueError('callback types must be "QUICK_REPLY" or "POSTBACK"')
+
         fns[fnname] = fn
     return fns
 
