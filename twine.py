@@ -64,8 +64,8 @@ data = [
                   t('i can tell u that everyone has a dirty floor so if you think you should clean it instead, dont bother'),
                   t('...tbc'),
                   opts('do options work?', ['just overwhelmed', 'no']),
+                  ],
       'types': ['QUICK_REPLY'],
-     ],
      },
     
 ]
