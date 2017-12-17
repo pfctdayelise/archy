@@ -78,6 +78,10 @@ def make_callback(name):
     return make_payload(name)
 
 
+def make_function_name(callback):
+    return 'callback_' + callback.lower()
+
+
 def functions(page):
     fns = {}
     for node in data:
@@ -85,7 +89,7 @@ def functions(page):
         # tricky, decorator with arg and fn with arg.
         # See http://python-3-patterns-idioms-test.readthedocs.io/en/latest/PythonDecorators.html#decorators-with-arguments
         callback = make_callback(node['name'])
-        fnname = callback.lower()
+        fnname = make_function_name(callback)
         print('Callback:', callback, 'fn name:', fnname)
         fn = page.callback([callback])(fn)
         fns[fnname] = fn
