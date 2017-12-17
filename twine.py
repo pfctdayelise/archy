@@ -30,19 +30,19 @@ class opts(Response):
 
 
 data = [
-    {'name': 'START_PAYLOAD',
-     'response': [
-         t('i cant help with everything, but I can help you do something'),
-         opts('what is your particular shame today?',
-              ['procrastination',
-               'my mediocrity',
-               'just overwhelmed',
-               'so distracted',
-              ]
-         ),
-     ]
-    },
-    {'name': 'procrastination',
+    # {'name': 'START_PAYLOAD',
+    #  'response': [
+    #      t('i cant help with everything, but I can help you do something'),
+    #      opts('what is your particular shame today?',
+    #           ['procrastination',
+    #            'my mediocrity',
+    #            'just overwhelmed',
+    #            'so distracted',
+    #           ]
+    #      ),
+    #  ]
+    # },
+    # {'name': 'procrastination',
      'response': [
          opts('apart from a white noise machine or a new brain what do you think would help you?', ['soothe me please', 'make me write']),
      ]

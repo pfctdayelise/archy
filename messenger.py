@@ -25,22 +25,22 @@ page.show_persistent_menu([
 page.show_starting_button("START_PAYLOAD")
 
 
-# @page.callback(['START_PAYLOAD'])
-# def start_callback(payload, event):
-#     """Quick replies have a 20 character limit!
-#     """
-#     recipient = event.sender_id
-#     page.send(recipient, "i cant help with everything, but i can help you do something")
+@page.callback(['START_PAYLOAD'])
+def start_callback(payload, event):
+    """Quick replies have a 20 character limit!
+    """
+    recipient = event.sender_id
+    page.send(recipient, "i cant help with everything, but i can help you do something")
  
-#     # only 20 characters text in quick replies...
-#     page.send(recipient, "what is your particular shame today?",
-#               quick_replies=[
-#                   {'title': 'procrastination', 'payload': 'PICK_PROCRASTINATION'},
-#                   {'title': 'my mediocrity', 'payload': 'PICK_MEDIOCRITY'},
-#                   {'title': 'just overwhelmed', 'payload': 'PICK_OVERWHELMED'},
-#                   {'title': 'so distracted', 'payload': 'PICK_DISTRACTED'},
-#               ],
-#               metadata="DEVELOPER_DEFINED_METADATA")
+    # only 20 characters text in quick replies...
+    page.send(recipient, "what is your particular shame today?",
+              quick_replies=[
+                  {'title': 'procrastination', 'payload': 'PICK_PROCRASTINATION'},
+                  {'title': 'my mediocrity', 'payload': 'PICK_MEDIOCRITY'},
+                  {'title': 'just overwhelmed', 'payload': 'PICK_OVERWHELMED'},
+                  {'title': 'so distracted', 'payload': 'PICK_DISTRACTED'},
+              ],
+              metadata="DEVELOPER_DEFINED_METADATA")
 
 
 # @page.callback(['PICK_PROCRASTINATION'])
