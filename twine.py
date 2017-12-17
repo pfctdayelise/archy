@@ -89,6 +89,6 @@ def functions(page):
         print('Callback:', callback, 'fn name:', fnname)
         fn = page.callback([callback])(fn)
         fns[fnname] = fn
-        return fns
+    return fns
 
 
