@@ -14,9 +14,9 @@ USER_SEQ = {}
 page.greeting("hi, im archy, and im sorry to hear youve decided to write")
 
 
-import util
 import twine
-util.add_functions_as_module_level_functions(twine.functions(page), __name__)
+#import util
+#util.add_functions_as_module_level_functions(twine.functions(page), __name__)
 
 page.show_persistent_menu([
     Template.ButtonPostBack('get started (again)', 'START_PAYLOAD'),
@@ -35,12 +35,21 @@ def start_callback(payload, event):
     # only 20 characters text in quick replies...
     page.send(recipient, "what is your particular shame today?",
               quick_replies=[
-                  {'title': 'procrastination', 'payload': 'PICK_PROCRASTINATION'},
-                  {'title': 'my mediocrity', 'payload': 'PICK_MY_MEDIOCRITY'},
-                  {'title': 'just overwhelmed', 'payload': 'PICK_JUST_OVERWHELMED'},
-                  {'title': 'so distracted', 'payload': 'PICK_SO_DISTRACTED'},
+                  {'title': 'procrastination', 'payload': 'PICK/PROCRASTINATION'},
+                  {'title': 'my mediocrity', 'payload': 'PICK/MY_MEDIOCRITY'},
+                  {'title': 'just overwhelmed', 'payload': 'PICK/JUST_OVERWHELMED'},
+                  {'title': 'so distracted', 'payload': 'PICK/SO_DISTRACTED'},
               ],
               metadata="DEVELOPER_DEFINED_METADATA")
+
+
+@page.callback(['PICK/(.+)'])
+def pick_qr(payload, event):
+  selection = payload #payload.split('/')[1]
+  responses = {twine.make_payload(node['name']): node for node in twine.data}
+  default = {'response': [twine.t('??? I missed that')]}
+  for response in responses.get(selection, default)['response']:
+      response.do(page, payload, event)
 
 
 # @page.callback(['PICK_PROCRASTINATION'])
