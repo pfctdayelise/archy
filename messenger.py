@@ -7,22 +7,26 @@ import json
 from config import CONFIG
 from fbmq import Attachment, Template, QuickReply, NotificationType
 from fbpage import page
+import twine
 
 USER_SEQ = {}
 
 
 page.greeting("hi, im archy, and im sorry to hear youve decided to write")
 
-
-import twine
-#import util
-#util.add_functions_as_module_level_functions(twine.functions(page), __name__)
-
 page.show_persistent_menu([
-    Template.ButtonPostBack('get started (again)', 'START_PAYLOAD'),
+    Template.ButtonPostBack("get started (again)", 'START_PAYLOAD'),
     ])
 
-page.show_starting_button("START_PAYLOAD")
+page.show_starting_button('START_PAYLOAD')
+
+
+def make_payload(option):
+    r = 'PICK/' + option.upper().replace(' ', '_').replace(',', '')
+    unexpected = {l for l in r if l not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890/_'}
+    if unexpected:
+        raise ValueError('Unexpected characters in option: %s' % option)
+    return r
 
 
 @page.callback(['START_PAYLOAD'])
@@ -45,41 +49,10 @@ def start_callback(payload, event):
 
 @page.callback(['PICK/(.+)'])
 def pick_qr(payload, event):
-  selection = payload #payload.split('/')[1]
   responses = {twine.make_payload(node['name']): node for node in twine.data}
-  default = {'response': [twine.t('??? I missed that')]}
-  for response in responses.get(selection, default)['response']:
+  default = {'response': [twine.t('... I dont know that yet')]}
+  for response in responses.get(payload, default)['response']:
       response.do(page, payload, event)
-
-
-# @page.callback(['PICK_PROCRASTINATION'])
-# def callback_picked_procrastination(payload, event):
-#     recipient = event.sender_id
-#     page.send(recipient, "apart from a white noise machine or a new brain what do you think would help you?")
-#     page.send(recipient, "(TBC)")
-
-
-# @page.callback(['PICK_MEDIOCRITY'])
-# def callback_picked_mediocrity(payload, event):
-#     recipient = event.sender_id
-#     page.send(recipient, "that sounds unpleasant")
-#     page.send(recipient, "what would help you right now?")
-#     page.send(recipient, "(TBC)")
-
-
-# @page.callback(['PICK_OVERWHELMED'])
-# def callback_picked_overwhelmed(payload, event):
-#     recipient = event.sender_id
-#     page.send(recipient, "...")
-#     page.send(recipient, "(TBC)")
-
-
-# @page.callback(['PICK_DISTRACTED'])
-# def callback_picked_distractions(payload, event):
-#     recipient = event.sender_id
-#     page.send(recipient, "i am not very good at staying focused")
-#     page.send(recipient, "i can tell u that everyone has a dirty floor so if you think u should clean it instead, dont bother")
-#     page.send(recipient, "(TBC)")
 
 
 @page.handle_optin
@@ -137,10 +110,11 @@ def received_message(event):
         quick_reply_payload = quick_reply.get('payload')
         print("received_message: quick reply for message %s with payload %s" % (message_id, quick_reply_payload))
 
-        page.send(sender_id, "Quick reply tapped")
+#        page.send(sender_id, "Quick reply tapped")
 
     if message_text:
-        send_message(sender_id, message_text)
+ #       send_message(sender_id, message_text)
+        pass
     elif message_attachments:
         page.send(sender_id, "Message with attachment received")
 
@@ -169,7 +143,7 @@ def received_postback(event):
     print("received_postback: for user %s and page %s with payload '%s' at %s"
           % (sender_id, recipient_id, payload, time_of_postback))
 
-    page.send(sender_id, "Postback called")
+#    page.send(sender_id, "Postback called")
 
 
 @page.handle_read
