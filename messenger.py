@@ -13,15 +13,17 @@ USER_SEQ = {}
 
 page.greeting("hi, im archy, and im sorry to hear youve decided to write")
 
+
+import util
+import twine
+util.add_functions_as_module_level_functions(twine.functions(page), __name__)
+
 page.show_persistent_menu([
     Template.ButtonPostBack('get started (again)', 'START_PAYLOAD'),
     ])
 
 page.show_starting_button("START_PAYLOAD")
 
-import util
-import twine
-util.add_functions_as_module_level_functions(twine.functions(page), __name__)
 
 # @page.callback(['START_PAYLOAD'])
 # def start_callback(payload, event):
