@@ -42,7 +42,7 @@ data = [
     #      ),
     #  ]
     # },
-    # {'name': 'procrastination',
+     {'name': 'procrastination',
      'response': [
          opts('apart from a white noise machine or a new brain what do you think would help you?', ['soothe me please', 'make me write']),
      ]
