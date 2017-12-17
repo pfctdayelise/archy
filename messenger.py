@@ -36,9 +36,9 @@ def start_callback(payload, event):
     page.send(recipient, "what is your particular shame today?",
               quick_replies=[
                   {'title': 'procrastination', 'payload': 'PICK_PROCRASTINATION'},
-                  {'title': 'my mediocrity', 'payload': 'PICK_MEDIOCRITY'},
-                  {'title': 'just overwhelmed', 'payload': 'PICK_OVERWHELMED'},
-                  {'title': 'so distracted', 'payload': 'PICK_DISTRACTED'},
+                  {'title': 'my mediocrity', 'payload': 'PICK_MY_MEDIOCRITY'},
+                  {'title': 'just overwhelmed', 'payload': 'PICK_JUST_OVERWHELMED'},
+                  {'title': 'so distracted', 'payload': 'PICK_SO_DISTRACTED'},
               ],
               metadata="DEVELOPER_DEFINED_METADATA")
 
