@@ -72,7 +72,7 @@ data = [
 
 def make_payload(option):
     r = 'PICK/' + option.upper().replace(' ', '_').replace(',', '')
-    unexpected = {l for l in r if l not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_'}
+    unexpected = {l for l in r if l not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890/_'}
     if unexpected:
         raise ValueError('Unexpected characters in option: %s' % option)
     return r
