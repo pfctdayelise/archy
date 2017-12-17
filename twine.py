@@ -48,13 +48,6 @@ data = [
      ],
       'types': ['QUICK_REPLY'],
      },
-    {'name': 'my mediocrity',
-     'response': [
-         t('that sounds unpleasant'),
-         opts('what would help you right now?', ['advice me', 'spill my guts', 'roast me, archy']),
-         ],
-      'types': ['QUICK_REPLY'],
-     },
     {'name': 'just overwhelmed',
      'response': [t('...tbc')],
       'types': ['QUICK_REPLY'],
@@ -65,6 +58,13 @@ data = [
                   t('...tbc'),
                   opts('do options work?', ['just overwhelmed', 'no']),
                   ],
+      'types': ['QUICK_REPLY'],
+     },
+    {'name': 'my mediocrity',
+     'response': [
+         t('that sounds unpleasant'),
+         opts('what would help you right now?', ['advice me', 'spill my guts', 'roast me, archy']),
+         ],
       'types': ['QUICK_REPLY'],
      },
     
