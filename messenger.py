@@ -21,12 +21,7 @@ page.show_persistent_menu([
 page.show_starting_button('START_PAYLOAD')
 
 
-def make_payload(option):
-    r = 'PICK/' + option.upper().replace(' ', '_').replace(',', '')
-    unexpected = {l for l in r if l not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890/_'}
-    if unexpected:
-        raise ValueError('Unexpected characters in option: %s' % option)
-    return r
+
 
 
 @page.callback(['START_PAYLOAD'])
@@ -49,7 +44,7 @@ def start_callback(payload, event):
 
 @page.callback(['PICK/(.+)'])
 def pick_qr(payload, event):
-  responses = {make_payload(node['name']): node for node in twine.data}
+  responses = {twine.make_payload(node['name']): node for node in twine.data}
   default = {'response': [twine.t('... I dont know that yet')]}
   for response in responses.get(payload, default)['response']:
       response.do(page, payload, event)
