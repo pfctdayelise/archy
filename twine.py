@@ -1,3 +1,6 @@
+import os
+from bs4 import BeautifulSoup
+
 
 class Response:
     def do(self, page, payload, event):
@@ -36,33 +39,35 @@ def make_payload(option):
     return r
 
 
-data = [
-     {'name': 'procrastination',
-     'response': [
-         opts('apart from a white noise machine or a new brain what do you think would help you?', ['soothe me please', 'make me write']),
-     ],
-     },
-    {'name': 'just overwhelmed',
-     'response': [t('...tbc')],
-     },
-    {'name': 'so distracted',
-     'response': [t('i am not very good at staying focused'),
-                  t('i can tell u that everyone has a dirty floor so if you think you should clean it instead, dont bother'),
-                  t('...tbc'),
-                  ],
-     },
-    {'name': 'my mediocrity',
-     'response': [
-         t('that sounds unpleasant'),
-         opts('what would help you right now?', ['advice me', 'spill my guts', 'roast me, archy']),
-         ],
-     },
+# data = [
+#      {'name': 'procrastination',
+#      'response': [
+#          opts('apart from a white noise machine or a new brain what do you think would help you?', ['soothe me please', 'make me write']),
+#      ],
+#      },
+#     {'name': 'just overwhelmed',
+#      'response': [t('...tbc')],
+#      },
+#     {'name': 'so distracted',
+#      'response': [t('i am not very good at staying focused'),
+#                   t('i can tell u that everyone has a dirty floor so if you think you should clean it instead, dont bother'),
+#                   t('...tbc'),
+#                   ],
+#      },
+#     {'name': 'my mediocrity',
+#      'response': [
+#          t('that sounds unpleasant'),
+#          opts('what would help you right now?', ['advice me', 'spill my guts', 'roast me, archy']),
+#          ],
+#      },
     
-]
+# ]
 
 
-def parse_twine(f='ArchyBot v4.0.1.html'):
-    from bs4 import BeautifulSoup
+def parse_twine():
+    homedir = os.path.expanduser(os.getenv('ARCHY_HOME', '~/workspace/archy'))
+    filename = os.getenv('ARCHY_FILENAME', 'ArchyBot v4.0.1.html')
+    f = os.path.join(homedir, filename)
     with open(f) as fp:
         soup = BeautifulSoup(fp, "html.parser")
 
