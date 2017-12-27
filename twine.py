@@ -59,3 +59,62 @@ data = [
      },
     
 ]
+
+
+def parse_twine(f='ArchyBot v4.0.1.html'):
+    from bs4 import BeautifulSoup
+    with open(f) as fp:
+        soup = BeautifulSoup(fp, "html.parser")
+
+    passages = soup.find_all('tw-passagedata')
+    data = [make_dict(passage) for passage in passages]
+    return data
+
+
+def make_dict(passage):
+    try:
+        name = passage['name']
+        response = parse_response(passage.text)
+    except:
+        print(passage)
+        return None
+    return dict(name=name, response=response)
+
+
+def parse_response(text):
+    """
+    Assume all options come at the end.
+
+    Example:
+    'that sounds unpleasant\nwhat would help you right now?\n[[advice me]]\n[[spill my guts]]\n[[roast me, archy]]'
+
+    ->
+
+    [
+     t('that sounds unpleasant'),
+     opts('what would help you right now?', ['advice me',
+                                             'spill my guts',
+                                             'roast me, archy',
+                                            ]),
+    ]
+    """
+
+    lines = text.split('\n')
+
+    def is_option(line):
+        return line.startswith('[[')
+
+    def parse_option(line):
+        return line.strip('[]')
+
+    responses = []
+    options = []
+    for line in reversed(lines):
+        if is_option(line):
+            options.append(parse_option(line))
+        elif options:
+            responses.append(opts(line, reversed(options)))
+            options = False
+        else:
+            responses.append(t(line))
+    return reversed(responses)

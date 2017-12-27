@@ -44,7 +44,7 @@ def start_callback(payload, event):
 
 @page.callback(['PICK/(.+)'])
 def pick_qr(payload, event):
-  responses = {twine.make_payload(node['name']): node for node in twine.data}
+  responses = {twine.make_payload(node['name']): node for node in twine.parse_twine()}
   default = {'response': [twine.t('... I dont know that yet')]}
   for response in responses.get(payload, default)['response']:
       response.do(page, payload, event)
