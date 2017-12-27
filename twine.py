@@ -123,6 +123,9 @@ def parse_response(text):
     responses = []
     options = []
     for line in reversed(lines):
+        if not line:
+            # filter out blank lines
+            continue
         if is_option(line):
             options.append(parse_option(line))
         elif options:
