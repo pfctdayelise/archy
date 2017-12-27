@@ -66,8 +66,10 @@ def make_payload(option):
 
 def parse_twine():
     homedir = os.path.expanduser(os.getenv('ARCHY_HOME', '~/workspace/archy'))
+    print(homedir)
     filename = os.getenv('ARCHY_FILENAME', 'ArchyBot v4.0.1.html')
     f = os.path.join(homedir, filename)
+    print(f)
     with open(f) as fp:
         soup = BeautifulSoup(fp, "html.parser")
 
