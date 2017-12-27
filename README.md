@@ -8,6 +8,10 @@ Create a config.py as per https://github.com/conbus/fbmq/blob/master/example/con
 
 * Verify token: https://developers.facebook.com > Page/app > Webhooks > 'Edit Subscription'. You create this.
 
+* Set env variables ARCHY_HOME and ARCHY_FILENAME (in Python Anywhere, this is done in wsgi.py).
+
+
+
 Special keywords you can type to the bot to demo different features:
 
 * image
