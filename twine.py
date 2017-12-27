@@ -11,6 +11,9 @@ class t(Response):
     def __init__(self, text):
         self.text = text
 
+    def __str__(self):
+        return 't(%s)' % self.text
+
     def do(self, page, payload, event):
         recipient = event.sender_id
         page.send(recipient, self.text)
@@ -20,6 +23,9 @@ class opts(Response):
     def __init__(self, q, options):
         self.q = q
         self.options = options
+
+    def __str__(self):
+        return 'opts(%s)' % self.q
 
     def do(self, page, payload, event):
         recipient = event.sender_id
@@ -32,10 +38,10 @@ class opts(Response):
 
 
 def make_payload(option):
-    r = 'PICK/' + option.upper().replace(' ', '_').replace(',', '')
+    r = 'PICK/' + option.upper().replace(' ', '_').replace(',', '').replace('-', '').replace('?', '').replace("'", '')
     unexpected = {l for l in r if l not in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890/_'}
     if unexpected:
-        raise ValueError('Unexpected characters in option: %s' % option)
+        raise ValueError('Unexpected characters in option: %s -> %s' % (option, r))
     return r
 
 
@@ -112,7 +118,7 @@ def parse_response(text):
         return line.startswith('[[')
 
     def parse_option(line):
-        return line.strip('[]')
+        return line.strip('[] ')
 
     responses = []
     options = []
@@ -125,3 +131,18 @@ def parse_response(text):
         else:
             responses.append(t(line))
     return reversed(responses)
+
+
+def test():
+    for item in parse_twine():
+        for t in item['response']:
+            if isinstance(t, opts):
+                for o in t.options:
+                    try:
+                        make_payload(o)
+                    except:
+                        print(item['name'])
+                        print(t)
+                        print(o)
+                        raise
+    print("all parsed successfully")
